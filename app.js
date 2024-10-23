@@ -419,7 +419,7 @@ app.get('/api/products/:id', async (req, res) => {
 
 
 // Start the server
-const port = 8082;
+const port = process.env.PORT || 8082;
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
