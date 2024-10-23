@@ -1,20 +1,15 @@
 {
-  "version": 2, // Vercel’s configuration version.
+  "version": 2,
   "builds": [
     {
-      "src": "app.js",  // Path to your app’s entry point.
-      "use": "@vercel/node"  // Vercel’s Node.js build step.
+      "src": "app.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",  // Route all requests to app.js.
-      "dest": "app.js"  // Destination for handling all requests.
+      "src": "/(.*)",
+      "dest": "/app.js"
     }
-  ],
-  "functions": {
-    "app.js": {
-      "timeout": 30  // Max time for function to run (30 seconds).
-    }
-  }
+  ]
 }
