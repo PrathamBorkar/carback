@@ -20,6 +20,9 @@ app.use(express.json());
 
 // MongoDB connection
 const mongoUrl = process.env.MONGO_URL;
+console.log('Mongo URL:', process.env.MONGO_URL);
+console.log('Mongo URL:', mongoURL);
+
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Database connected");
