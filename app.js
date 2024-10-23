@@ -17,8 +17,10 @@ const JWT_SECRET = "kutevfydcwvWRULI.OH8GHP9Q385UYHU0-1AGJEOIR";
 app.use(cors()); // Enable CORS
 app.use(express.json()); // Middleware to parse JSON
 
+mongoose.connect(process.env.mongoUrl);
+
 // MongoDB connection
-const mongoUrl = "mongodb+srv://prathamb0171:racheldhanraj@cluster0.uh4a8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+//const mongoUrl = "mongodb+srv://prathamb0171:racheldhanraj@cluster0.uh4a8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
