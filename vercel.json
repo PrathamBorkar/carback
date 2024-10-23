@@ -14,7 +14,7 @@
   ],
   "functions": {
     "app.js": {
-      "timeout": 30 // Set timeout to 30 seconds (maximum allowed is 60 seconds)
+      "timeout": 30 
     }
   }
 }
