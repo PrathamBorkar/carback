@@ -6,30 +6,29 @@ const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 dotenv.config();
-console.log("Email User:", process.env.EMAIL_USER);
-console.log("Email Pass is set:", !!process.env.EMAIL_PASS);
-
 
 const app = express();
-const JWT_SECRET = "kutevfydcwvWRULI.OH8GHP9Q385UYHU0-1AGJEOIR";
+const JWT_SECRET = process.env.JWT_SECRET || "kutevfydcwvWRULI.OH8GHP9Q385UYHU0-1AGJEOIR";
 
 // Middleware
-app.use(cors()); // Enable CORS
-app.use(express.json()); // Middleware to parse JSON
-
-
-const mongoUrl = process.env.MONGO_URL;
+app.use(cors({
+  origin: ['https://your-frontend-url.com'], // Replace with your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+app.use(express.json());
 
 // MongoDB connection
-//const mongoUrl = "mongodb+srv://prathamb0171:racheldhanraj@cluster0.uh4a8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
+const mongoUrl = process.env.MONGO_URL;
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Database connected");
   })
   .catch((e) => {
     console.error("Database connection error:", e);
+    process.exit(1); // Exit if MongoDB connection fails
   });
+
 
 // User schema and model for registration/login
 const UserDetailsSchema = new mongoose.Schema({
