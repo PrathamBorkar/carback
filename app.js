@@ -306,7 +306,7 @@ app.get("/getGarages", async (req, res) => {
 });
 
 
-app.get('/api/products', async (req, res) => {
+app.get('/products', async (req, res) => {
   try {
     const products = await Product.find({});
     res.status(200).json({
@@ -321,11 +321,27 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
+const Product = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    adhaarno: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
+    model: { type: String, required: true },
+    price: { type: String, required: true },
+    vin: { type: String, required: true },
+    licenseno: { type: String, required: true },
+    fueltype: { type: String, required: false },
+    image: { type: String, required: false },
+  },
+  { timestamps: true }
+);
 
 
 
 
-app.post('/api/products', async (req, res) => {
+
+app.post('/add-products', async (req, res) => {
   console.log("product");
   const product = req.body;
   console.log(product);
@@ -357,7 +373,7 @@ app.post('/api/products', async (req, res) => {
 
 
 
-app.get('/api/products/:id', async (req, res) => {
+app.get('/products/:id', async (req, res) => {
   try {
     const { id } = req.params;  // Extract the ID from URL parameters
     const car = await Product.findById(id);  // Find the car by ID in the database
