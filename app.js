@@ -223,6 +223,41 @@ app.post('/add-car', async (req, res) => {
   }
 });
 
+
+app.get('/cars', async (req, res) => {
+
+  try {console.log("cardetail fetching 1 api hited ")
+    const cars = await Car.find(); // Fetch all cars
+    res.json(cars);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching car data' });
+  }
+});
+
+
+app.get('/cars/:id', async (req, res) => {
+  try {
+    console.log("Fetching car with ID:", req.params.id);
+
+    if (!req.params.id) {
+      return res.status(400).json({ message: 'Car ID is required' });
+    }
+
+    const car = await Car.findById(req.params.id);
+    console.log('Car object:', car);
+
+    if (!car) {
+      return res.status(404).json({ message: 'Car not found' });
+    }
+
+    res.json(car);
+  } catch (error) {
+    console.error('Error while fetching car:', error);
+    res.status(500).json({ message: 'Error fetching car data' });
+  }
+});
+
+
 // Garage schema and model
 const garageSchema = new mongoose.Schema({
   garageName: { type: String, required: true },
