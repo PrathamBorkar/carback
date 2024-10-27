@@ -306,20 +306,6 @@ app.get("/getGarages", async (req, res) => {
 });
 
 
-app.get('/products', async (req, res) => {
-  try {
-    const products = await Product.find({});
-    res.status(200).json({
-      success: true,
-      data: products,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Error retrieving products',
-    });
-  }
-});
 
 const Product = new mongoose.Schema(
   {
@@ -337,6 +323,16 @@ const Product = new mongoose.Schema(
   { timestamps: true }
 );
 
+
+app.get('/products', async (req, res) => {
+  try {
+    const products = await Car.find();
+    res.status(200).json({ data: products });
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ error: 'Failed to fetch products' });
+  }
+});
 
 
 
