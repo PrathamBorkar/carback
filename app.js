@@ -305,6 +305,82 @@ app.get("/getGarages", async (req, res) => {
   }
 });
 
+
+app.get('/api/products', async (req, res) => {
+  try {
+    const products = await Product.find({});
+    res.status(200).json({
+      success: true,
+      data: products,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error retrieving products',
+    });
+  }
+});
+
+
+
+
+
+app.post('/api/products', async (req, res) => {
+  console.log("product");
+  const product = req.body;
+  console.log(product);
+  if (!product.name || !product.adhaarno || !product.email || !product.phone ||
+      !product.model || !product.price || !product.vin || !product.licenseno ||
+      !product.fueltype) {
+    return res.status(400).json({
+      success: false,
+      message: 'Missing required fields. Please ensure all fields are filled.',
+    });
+  }
+
+  const newProduct = new Product(product);
+
+  try {
+    await newProduct.save();
+    res.status(201).json({
+      success: true,
+      data: newProduct,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error saving the product to the database',
+    });
+  }
+});
+
+
+
+
+app.get('/api/products/:id', async (req, res) => {
+  try {
+    const { id } = req.params;  // Extract the ID from URL parameters
+    const car = await Product.findById(id);  // Find the car by ID in the database
+
+    if (!car) {
+      return res.status(404).json({
+        success: false,
+        message: 'Car not found',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: car,  // Send the car data in response
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error retrieving car',
+    });
+  }
+});
+
 // Start the server
 const PORT = process.env.PORT || 8082;
 app.listen(PORT, () => {
